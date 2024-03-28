@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		042D2A002BAD2F3100520CFC /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D29FF2BAD2F3100520CFC /* SetGame.swift */; };
+		042D2A022BAD347100520CFC /* SetMv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D2A012BAD347100520CFC /* SetMv.swift */; };
 		044E33F22BA9144500E717E0 /* setApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E33F12BA9144500E717E0 /* setApp.swift */; };
 		044E33F42BA9144500E717E0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E33F32BA9144500E717E0 /* ContentView.swift */; };
 		044E33F62BA9144600E717E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 044E33F52BA9144600E717E0 /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		042D29FF2BAD2F3100520CFC /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
+		042D2A012BAD347100520CFC /* SetMv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMv.swift; sourceTree = "<group>"; };
 		044E33EE2BA9144500E717E0 /* set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		044E33F12BA9144500E717E0 /* setApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setApp.swift; sourceTree = "<group>"; };
 		044E33F32BA9144500E717E0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,8 +100,10 @@
 			children = (
 				044E33F12BA9144500E717E0 /* setApp.swift */,
 				044E33F32BA9144500E717E0 /* ContentView.swift */,
+				042D29FF2BAD2F3100520CFC /* SetGame.swift */,
 				044E33F52BA9144600E717E0 /* Assets.xcassets */,
 				044E33F72BA9144600E717E0 /* Preview Content */,
+				042D2A012BAD347100520CFC /* SetMv.swift */,
 			);
 			path = set;
 			sourceTree = "<group>";
@@ -258,6 +264,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				044E33F42BA9144500E717E0 /* ContentView.swift in Sources */,
+				042D2A022BAD347100520CFC /* SetMv.swift in Sources */,
+				042D2A002BAD2F3100520CFC /* SetGame.swift in Sources */,
 				044E33F22BA9144500E717E0 /* setApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
