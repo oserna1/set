@@ -100,10 +100,10 @@
 			children = (
 				044E33F12BA9144500E717E0 /* setApp.swift */,
 				044E33F32BA9144500E717E0 /* ContentView.swift */,
+				042D2A012BAD347100520CFC /* SetMv.swift */,
 				042D29FF2BAD2F3100520CFC /* SetGame.swift */,
 				044E33F52BA9144600E717E0 /* Assets.xcassets */,
 				044E33F72BA9144600E717E0 /* Preview Content */,
-				042D2A012BAD347100520CFC /* SetMv.swift */,
 			);
 			path = set;
 			sourceTree = "<group>";

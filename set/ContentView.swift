@@ -90,12 +90,18 @@ struct CardView: View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 12)
             let shape = card.shape
+            let color = getColor(fromString: card.color)
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: 2)
                 VStack {
                     ForEach(1...card.shapecount, id: \.self) { id in
-                        getShape(fromString:shape).fill(getColor(fromString: card.color)).frame(width: 20, height: 10).opacity(card.opacity)
+                        if (card.opacity == 0) {
+                            getShape(fromString:shape).stroke(color, lineWidth: 1).fill(color.opacity(card.opacity)).frame(width: 20, height: 10)
+                        } else {
+                            getShape(fromString:shape).fill(color.opacity(card.opacity)).frame(width: 20, height: 10)
+                        }
+                        
                     }
                 }
             }
