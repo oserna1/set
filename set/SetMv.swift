@@ -22,7 +22,7 @@ class SetMv : ObservableObject {
     
     private struct SetGameOptions {
         var shapes: Set<String> = ["diamond", "capsule", "rectangle"]
-        var opacities: Set<Double> = [0, 0.5, 1.0]
+        var opacities: Set<Double> = [0, 0.3, 1.0]
         var colors: Set<String> = ["red", "green", "purple"]
     }
 }
