@@ -11,7 +11,7 @@ struct ContentView: View {
     @ObservedObject var viewModel = SetMv()
     
     var body: some View {
-        AspectVGrid(viewModel.cards, aspectRatio: 2/3) { card in CardView(card: card) }.padding()
+        AspectVGrid<SetGame.Card, CardView>(viewModel.dealtCards, aspectRatio: 2/3) { card in CardView(card: card, vm: viewModel) }
     }
     
     struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
@@ -86,6 +86,7 @@ public func getShape(fromString shape: String) -> some Shape {
 
 struct CardView: View {
     let card: SetGame.Card
+    let vm: SetMv
     var body: some View {
         ZStack {
             let base = RoundedRectangle(cornerRadius: 12)
@@ -93,7 +94,7 @@ struct CardView: View {
             let color = getColor(fromString: card.color)
             Group {
                 base.fill(.white)
-                base.strokeBorder(lineWidth: 2)
+                base.strokeBorder(card.isSelected ? .yellow : .black, lineWidth: card.isSelected ? 3 : 2)
                 GeometryReader { geometry in
                     VStack {
                         ForEach(1...card.shapecount, id: \.self) { id in
@@ -105,7 +106,10 @@ struct CardView: View {
                         }
                     }
                 }.padding()
-            }
+            }.padding(1)
+        }
+        .onTapGesture {
+            vm.choose(card)
         }
     }
 }

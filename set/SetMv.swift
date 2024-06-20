@@ -20,9 +20,18 @@ class SetMv : ObservableObject {
         return model.cards
     }
     
+    var dealtCards: Array<SetGame.Card>
+    {
+        return model.cards.filter { $0.isBeingPlayed }
+    }
+    
     private struct SetGameOptions {
         var shapes: Set<String> = ["diamond", "capsule", "rectangle"]
         var opacities: Set<Double> = [0, 0.3, 1.0]
         var colors: Set<String> = ["red", "green", "purple"]
+    }
+    
+    func choose(_ card: SetGame.Card) {
+        model.choose(card)
     }
 }
