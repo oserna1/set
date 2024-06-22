@@ -34,8 +34,7 @@ struct ContentView: View {
                 )
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0) {
                     ForEach(items) { item in
-                        content(item)
-                            .aspectRatio(aspectRatio, contentMode: .fit)
+                        content(item).aspectRatio(aspectRatio, contentMode: .fit)
                     }
                 }
             }
@@ -94,14 +93,14 @@ struct CardView: View {
             let color = getColor(fromString: card.color)
             Group {
                 base.fill(.white)
-                base.strokeBorder(card.isSelected ? .yellow : .black, lineWidth: card.isSelected ? 3 : 2)
+                base.strokeBorder(card.isMatched ? .green : card.isSelected ? .yellow : .black, lineWidth: card.isSelected || card.isMatched ? 4 : 2)
                 GeometryReader { geometry in
                     VStack {
                         ForEach(1...card.shapecount, id: \.self) { id in
                             if (card.opacity == 0) {
-                                getShape(fromString:shape).stroke(color, lineWidth: 1).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.6)
+                                getShape(fromString:shape).stroke(color, lineWidth: 1).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.5)
                             } else {
-                                getShape(fromString:shape).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.6)
+                                getShape(fromString:shape).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.5)
                             }
                         }
                     }

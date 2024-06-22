@@ -17,8 +17,8 @@ struct SetGame {
             for opacity in opacities {
                 for shape in shapes {
                     for color in colors {
-                        id += 1;
                         cards.append(Card(shape: shape, shapecount: shapeCount, opacity: opacity, color: color, id: id))
+                        id += 1;
                     }
                 }
             }
@@ -32,9 +32,27 @@ struct SetGame {
     }
     
     mutating func choose(_ card: Card) {
-        if let selectedIndex = cards.findFirst(card)
-        {
-            cards[selectedIndex].isSelected.toggle()
+        let selectedDealtCards = cards.filter { $0.isSelected && $0.isBeingPlayed}
+        if let selectedIndex = cards.findFirst(card) {
+            if (selectedDealtCards.count < 3) {
+                if (selectedDealtCards.count == 2 && !cards[selectedIndex].isSelected) {
+                    //TODO matched logic
+                    selectedDealtCards.forEach { card in
+                        cards[card.id].isMatched = true
+                    }
+                    cards[selectedIndex].isMatched = true
+                }
+                cards[selectedIndex].isSelected.toggle()
+            } else if (!cards[selectedIndex].isSelected) {
+                // TODO matched logic
+                cards[selectedIndex].isSelected.toggle()
+                selectedDealtCards.forEach { card in
+                    cards[card.id].isSelected = false
+                    cards[card.id].isBeingPlayed = false
+                }
+            } else if (!cards[selectedIndex].isMatched) {
+                cards[selectedIndex].isSelected.toggle()
+            }
         }
     }
     
@@ -47,8 +65,9 @@ struct SetGame {
         var opacity: Double
         var color: String
         var id: Int
-        var isSelected: Bool = false
-        var isBeingPlayed: Bool = false
+        var isSelected = false
+        var isBeingPlayed = false
+        var isMatched = false
     }
 }
 
