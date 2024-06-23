@@ -11,6 +11,7 @@ struct ContentView: View {
     @ObservedObject var viewModel = SetMv()
     
     var body: some View {
+        Text("unplayed card: " + String(viewModel.cards.filter{!$0.isBeingPlayed && !$0.isMatched}.count)) // todo remove
         AspectVGrid<SetGame.Card, CardView>(viewModel.dealtCards, aspectRatio: 2/3) { card in CardView(card: card, vm: viewModel) }
     }
     

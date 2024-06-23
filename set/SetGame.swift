@@ -23,10 +23,22 @@ struct SetGame {
                 }
             }
         }
-        var shuffledCardIds = Array(0...cards.count-1).shuffled()
-        for _ in 1...12 {
-            if let index = shuffledCardIds.popLast() {
-                cards[index].isBeingPlayed = true
+        makeUnplayedCardsPlayable()
+    }
+    
+    func isPlayable (_ card: Card) -> Bool {
+        return !card.isSelected && !card.isSelected && !card.isMatched
+    }
+    
+    mutating private func makeUnplayedCardsPlayable() {
+        var shuffledPlayableCards = cards.filter(isPlayable).shuffled()
+        if (!shuffledPlayableCards.isEmpty) {
+            for _ in 1...12 - (cards.filter { $0.isBeingPlayed }.count) {
+                if let lastShuffledCard = shuffledPlayableCards.popLast() {
+                    if let index = cards.findFirst(lastShuffledCard) {
+                        cards[index].isBeingPlayed = true
+                    }
+                }
             }
         }
     }
@@ -43,13 +55,14 @@ struct SetGame {
                     cards[selectedIndex].isMatched = true
                 }
                 cards[selectedIndex].isSelected.toggle()
-            } else if (!cards[selectedIndex].isSelected) {
+            } else if (selectedDealtCards.count == 3 && !cards[selectedIndex].isSelected) {
                 // TODO matched logic
                 cards[selectedIndex].isSelected.toggle()
                 selectedDealtCards.forEach { card in
                     cards[card.id].isSelected = false
                     cards[card.id].isBeingPlayed = false
                 }
+                makeUnplayedCardsPlayable()
             } else if (!cards[selectedIndex].isMatched) {
                 cards[selectedIndex].isSelected.toggle()
             }
