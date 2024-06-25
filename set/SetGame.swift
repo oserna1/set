@@ -26,14 +26,14 @@ struct SetGame {
         makeUnplayedCardsPlayable()
     }
     
-    func isPlayable (_ card: Card) -> Bool {
-        return !card.isSelected && !card.isSelected && !card.isMatched
+    private func isPlayable (_ card: Card) -> Bool {
+        return !card.isSelected && !card.isSelected && !card.isMatched && !card.isBeingPlayed
     }
     
-    mutating private func makeUnplayedCardsPlayable() {
+    public mutating func makeUnplayedCardsPlayable(isThreeNewCards: Bool = false) {
         var shuffledPlayableCards = cards.filter(isPlayable).shuffled()
         if (!shuffledPlayableCards.isEmpty) {
-            for _ in 1...12 - (cards.filter { $0.isBeingPlayed }.count) {
+            for _ in 1...(isThreeNewCards ? 3 : (12 - (cards.filter { $0.isBeingPlayed }.count))) {
                 if let lastShuffledCard = shuffledPlayableCards.popLast() {
                     if let index = cards.findFirst(lastShuffledCard) {
                         cards[index].isBeingPlayed = true
@@ -43,7 +43,7 @@ struct SetGame {
         }
     }
     
-    mutating func choose(_ card: Card) {
+    public mutating func choose(_ card: Card) {
         let selectedDealtCards = cards.filter { $0.isSelected && $0.isBeingPlayed}
         if let selectedIndex = cards.findFirst(card) {
             if (selectedDealtCards.count < 3) {

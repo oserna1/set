@@ -11,8 +11,19 @@ struct ContentView: View {
     @ObservedObject var viewModel = SetMv()
     
     var body: some View {
-        Text("unplayed card: " + String(viewModel.cards.filter{!$0.isBeingPlayed && !$0.isMatched}.count)) // todo remove
-        AspectVGrid<SetGame.Card, CardView>(viewModel.dealtCards, aspectRatio: 2/3) { card in CardView(card: card, vm: viewModel) }
+        VStack {
+            AspectVGrid<SetGame.Card, CardView>(viewModel.dealtCards, aspectRatio: 2/3) { card in CardView(card: card, vm: viewModel) }
+            HStack {
+                Button("new game") {
+                    viewModel.newGame()
+                }
+                if (viewModel.cards.filter{!$0.isBeingPlayed && !$0.isMatched}.count > 0) {
+                    Button("Add 3 Cards") {
+                        viewModel.threeNewCards()
+                    }
+                }
+            }
+        }
     }
     
     struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
@@ -94,7 +105,10 @@ struct CardView: View {
             let color = getColor(fromString: card.color)
             Group {
                 base.fill(.white)
-                base.strokeBorder(card.isMatched ? .green : card.isSelected ? .yellow : .black, lineWidth: card.isSelected || card.isMatched ? 4 : 2)
+                base.strokeBorder(
+                    card.isMatched ? .green :
+                        card.isSelected ? .yellow : .black,
+                    lineWidth: card.isSelected || card.isMatched ? 4 : 2)
                 GeometryReader { geometry in
                     VStack {
                         ForEach(1...card.shapecount, id: \.self) { id in

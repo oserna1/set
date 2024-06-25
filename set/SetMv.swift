@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// todo add Observable
 class SetMv : ObservableObject {
     
     init() {
@@ -31,7 +31,16 @@ class SetMv : ObservableObject {
         var colors: Set<String> = ["red", "green", "purple"]
     }
     
-    func choose(_ card: SetGame.Card) {
+    public func choose(_ card: SetGame.Card) {
         model.choose(card)
+    }
+    
+    public func threeNewCards() {
+        model.makeUnplayedCardsPlayable(isThreeNewCards: true)
+    }
+    
+    public func newGame() {
+        let options = SetGameOptions();
+        model = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)
     }
 }
