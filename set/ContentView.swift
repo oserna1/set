@@ -113,7 +113,7 @@ struct CardView: View {
                     VStack {
                         ForEach(1...card.shapecount, id: \.self) { id in
                             if (card.opacity == 0) {
-                                getShape(fromString:shape).stroke(color, lineWidth: 1).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.5)
+                                getShape(fromString:shape).stroke(color, lineWidth: 1).frame(width: geometry.size.width, height: geometry.size.width * 0.5)
                             } else {
                                 getShape(fromString:shape).fill(color.opacity(card.opacity)).frame(width: geometry.size.width, height: geometry.size.width * 0.5)
                             }

@@ -26,6 +26,18 @@ struct SetGame {
         makeUnplayedCardsPlayable()
     }
     
+    private func isSet(_ cards: Array<Card>) -> Bool {
+        if (cards.count == 3) {
+            let colors = Set(cards.map { $0.color }).count % 3
+            let shapes = Set(cards.map { $0.shape }).count % 3
+            let shapeCounts = Set(cards.map { $0.shapecount }).count % 3
+            let shades = Set(cards.map { $0.opacity }).count % 3
+            
+            return (colors + shapes + shapeCounts + shades) <= 4
+        }
+        return false;
+    }
+    
     private func isPlayable (_ card: Card) -> Bool {
         return !card.isSelected && !card.isSelected && !card.isMatched && !card.isBeingPlayed
     }
@@ -48,23 +60,37 @@ struct SetGame {
         if let selectedIndex = cards.findFirst(card) {
             if (selectedDealtCards.count < 3) {
                 if (selectedDealtCards.count == 2 && !cards[selectedIndex].isSelected) {
-                    //TODO matched logic
-                    selectedDealtCards.forEach { card in
-                        cards[card.id].isMatched = true
+                    var selectedCards = selectedDealtCards;
+                    selectedCards.append(cards[selectedIndex])
+                    if (isSet(selectedCards)) {
+                        selectedDealtCards.forEach { card in
+                            if let index = cards.findFirst(card){
+                                cards[index].isMatched = true
+                            }
+                        }
+                        cards[selectedIndex].isMatched = true
                     }
-                    cards[selectedIndex].isMatched = true
                 }
                 cards[selectedIndex].isSelected.toggle()
-            } else if (selectedDealtCards.count == 3 && !cards[selectedIndex].isSelected) {
-                // TODO matched logic
-                cards[selectedIndex].isSelected.toggle()
-                selectedDealtCards.forEach { card in
-                    cards[card.id].isSelected = false
-                    cards[card.id].isBeingPlayed = false
+            } else {
+                if (selectedDealtCards.allSatisfy {$0.isMatched} && selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
+                    selectedDealtCards.forEach { card in
+                        if let index = cards.findFirst(card) {
+                            cards[index].isSelected = false
+                            cards[index].isBeingPlayed = false
+                        }
+                    }
+                    cards[selectedIndex].isSelected = true
+                } else if (selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
+                    selectedDealtCards.forEach { card in
+                        if let index = cards.findFirst(card) {
+                            cards[index].isSelected = false
+                        }
+                    }
+                    cards[selectedIndex].isSelected.toggle()
+                } else if (!cards[selectedIndex].isMatched) {
+                    cards[selectedIndex].isSelected.toggle()
                 }
-                makeUnplayedCardsPlayable()
-            } else if (!cards[selectedIndex].isMatched) {
-                cards[selectedIndex].isSelected.toggle()
             }
         }
     }
