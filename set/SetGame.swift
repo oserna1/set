@@ -45,12 +45,16 @@ struct SetGame {
     public mutating func makeUnplayedCardsPlayable(isThreeNewCards: Bool = false) {
         var shuffledPlayableCards = cards.filter(isPlayable).shuffled()
         if (!shuffledPlayableCards.isEmpty) {
-            for _ in 1...(isThreeNewCards ? 3 : (12 - (cards.filter { $0.isBeingPlayed }.count))) {
-                if let lastShuffledCard = shuffledPlayableCards.popLast() {
-                    if let index = cards.findFirst(lastShuffledCard) {
-                        cards[index].isBeingPlayed = true
+            let cardsNeededToFillBoard =  12 - (cards.filter { $0.isBeingPlayed }.count)
+            if (cardsNeededToFillBoard > 1 || isThreeNewCards) {
+                for _ in 1...(isThreeNewCards ? 3 : cardsNeededToFillBoard) {
+                    if let lastShuffledCard = shuffledPlayableCards.popLast() {
+                        if let index = cards.findFirst(lastShuffledCard) {
+                            cards[index].isBeingPlayed = true
+                        }
                     }
                 }
+                cards.shuffle()
             }
         }
     }
@@ -81,6 +85,7 @@ struct SetGame {
                         }
                     }
                     cards[selectedIndex].isSelected = true
+                    makeUnplayedCardsPlayable()
                 } else if (selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
                     selectedDealtCards.forEach { card in
                         if let index = cards.findFirst(card) {
@@ -95,6 +100,7 @@ struct SetGame {
         }
     }
     
+    // TODO: add enum for display to show selected, valid match, invalid match
     struct Card: Identifiable,Equatable {
         var debugDescription: String {
             "\(id) \(shapecount) \(shape) \(opacity) \(color)"
