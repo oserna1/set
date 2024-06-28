@@ -39,7 +39,7 @@ struct SetGame {
     }
     
     private func isPlayable (_ card: Card) -> Bool {
-        return !card.isSelected && !card.isSelected && !card.isMatched && !card.isBeingPlayed
+        return card.select == Select.selected(false) && !card.isBeingPlayed
     }
     
     public mutating func makeUnplayedCardsPlayable(isThreeNewCards: Bool = false) {
@@ -59,48 +59,62 @@ struct SetGame {
         }
     }
     
+    // TODO: simplify this
     public mutating func choose(_ card: Card) {
-        let selectedDealtCards = cards.filter { $0.isSelected && $0.isBeingPlayed}
+        let selectedDealtCards = cards.filter { $0.select != Select.selected(false) && $0.isBeingPlayed}
         if let selectedIndex = cards.findFirst(card) {
             if (selectedDealtCards.count < 3) {
-                if (selectedDealtCards.count == 2 && !cards[selectedIndex].isSelected) {
+                if (selectedDealtCards.count == 2 && cards[selectedIndex].select == Select.selected(false)) {
                     var selectedCards = selectedDealtCards;
                     selectedCards.append(cards[selectedIndex])
                     if (isSet(selectedCards)) {
                         selectedDealtCards.forEach { card in
                             if let index = cards.findFirst(card){
-                                cards[index].isMatched = true
+                                cards[index].select = .matched
                             }
                         }
-                        cards[selectedIndex].isMatched = true
+                        cards[selectedIndex].select = .matched
+                    } else {
+                        selectedDealtCards.forEach { card in
+                            if let index = cards.findFirst(card){
+                                cards[index].select = .invalid
+                            }
+                        }
+                        cards[selectedIndex].select = .invalid
                     }
+                } else {
+                    cards[selectedIndex].select = cards[selectedIndex].select.toggle()
                 }
-                cards[selectedIndex].isSelected.toggle()
             } else {
-                if (selectedDealtCards.allSatisfy {$0.isMatched} && selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
+                if (selectedDealtCards.allSatisfy {$0.select == Select.matched} &&
+                    selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
                     selectedDealtCards.forEach { card in
                         if let index = cards.findFirst(card) {
-                            cards[index].isSelected = false
+                            cards[index].select = Select.selected(false)
                             cards[index].isBeingPlayed = false
                         }
                     }
-                    cards[selectedIndex].isSelected = true
+                    cards[selectedIndex].select = Select.selected(true)
                     makeUnplayedCardsPlayable()
                 } else if (selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
                     selectedDealtCards.forEach { card in
                         if let index = cards.findFirst(card) {
-                            cards[index].isSelected = false
+                            cards[index].select = Select.selected(false)
                         }
                     }
-                    cards[selectedIndex].isSelected.toggle()
-                } else if (!cards[selectedIndex].isMatched) {
-                    cards[selectedIndex].isSelected.toggle()
+                    cards[selectedIndex].select = cards[selectedIndex].select.toggle()
+                } else if (cards[selectedIndex].select != Select.matched) {
+                    selectedDealtCards.forEach { card in
+                        if let index = cards.findFirst(card) {
+                            cards[index].select = Select.selected(false)
+                        }
+                    }
+                    cards[selectedIndex].select = cards[selectedIndex].select.toggle()
                 }
             }
         }
     }
     
-    // TODO: add enum for display to show selected, valid match, invalid match
     struct Card: Identifiable,Equatable {
         var debugDescription: String {
             "\(id) \(shapecount) \(shape) \(opacity) \(color)"
@@ -110,9 +124,18 @@ struct SetGame {
         var opacity: Double
         var color: String
         var id: Int
-        var isSelected = false
         var isBeingPlayed = false
-        var isMatched = false
+        var select: Select = .selected(false)
+    }
+}
+
+public enum Select : Equatable {
+    case selected(Bool)
+    case matched
+    case invalid
+    
+    func toggle() -> Select {
+        return self == .selected(true) ? Select.selected(false) : Select.selected(true)
     }
 }
 

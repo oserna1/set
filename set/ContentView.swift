@@ -17,7 +17,7 @@ struct ContentView: View {
                 Button("new game") {
                     viewModel.newGame()
                 }
-                if (viewModel.cards.filter{!$0.isBeingPlayed && !$0.isMatched}.count > 0) {
+                if (viewModel.cards.filter{ !$0.isBeingPlayed && $0.select != Select.matched }.count > 0) {
                     Button("Add 3 Cards") {
                         viewModel.threeNewCards()
                     }
@@ -95,6 +95,19 @@ public func getShape(fromString shape: String) -> some Shape {
     }
 }
 
+func getBorderColor(selectType: Select) -> Color {
+    switch selectType {
+    case .selected(true):
+        .yellow
+    case .matched:
+        .green
+    case .invalid:
+        .red
+    default:
+        .black
+    }
+}
+
 struct CardView: View {
     let card: SetGame.Card
     let vm: SetMv
@@ -105,10 +118,7 @@ struct CardView: View {
             let color = getColor(fromString: card.color)
             Group {
                 base.fill(.white)
-                base.strokeBorder(
-                    card.isMatched ? .green :
-                        card.isSelected ? .yellow : .black,
-                    lineWidth: card.isSelected || card.isMatched ? 4 : 2)
+                base.strokeBorder(getBorderColor(selectType: card.select), lineWidth: card.select == Select.selected(false) ? 2 : 4)
                 GeometryReader { geometry in
                     VStack {
                         ForEach(1...card.shapecount, id: \.self) { id in
