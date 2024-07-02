@@ -16,6 +16,7 @@
 		044E34032BA9144600E717E0 /* setTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E34022BA9144600E717E0 /* setTests.swift */; };
 		044E340D2BA9144600E717E0 /* setUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E340C2BA9144600E717E0 /* setUITests.swift */; };
 		044E340F2BA9144600E717E0 /* setUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E340E2BA9144600E717E0 /* setUITestsLaunchTests.swift */; };
+		04DBE9AA2C32110C00936491 /* AspectVgrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04DBE9A92C32110C00936491 /* AspectVgrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		044E34082BA9144600E717E0 /* setUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = setUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		044E340C2BA9144600E717E0 /* setUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setUITests.swift; sourceTree = "<group>"; };
 		044E340E2BA9144600E717E0 /* setUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		04DBE9A92C32110C00936491 /* AspectVgrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVgrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				042D29FF2BAD2F3100520CFC /* SetGame.swift */,
 				044E33F52BA9144600E717E0 /* Assets.xcassets */,
 				044E33F72BA9144600E717E0 /* Preview Content */,
+				04DBE9A92C32110C00936491 /* AspectVgrid.swift */,
 			);
 			path = set;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			files = (
 				044E33F42BA9144500E717E0 /* ContentView.swift in Sources */,
 				042D2A022BAD347100520CFC /* SetMv.swift in Sources */,
+				04DBE9AA2C32110C00936491 /* AspectVgrid.swift in Sources */,
 				042D2A002BAD2F3100520CFC /* SetGame.swift in Sources */,
 				044E33F22BA9144500E717E0 /* setApp.swift in Sources */,
 			);
