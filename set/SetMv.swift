@@ -6,23 +6,23 @@
 //
 
 import SwiftUI
-// todo add Observable
+// TODO: add Observable and change model view model names
 class SetMv : ObservableObject {
     
     init() {
         let options = SetGameOptions();
-        model = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)
+        setGame = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)
     }
     
-    @Published private var model: SetGame
+    @Published private var setGame: SetGame
     
     var cards: Array<SetGame.Card> {
-        return model.cards
+        return setGame.cards
     }
     
     var dealtCards: Array<SetGame.Card>
     {
-        return model.cards.filter { $0.isBeingPlayed }
+        return setGame.cards.filter { $0.isBeingPlayed }
     }
     
     private struct SetGameOptions {
@@ -32,15 +32,15 @@ class SetMv : ObservableObject {
     }
     
     public func choose(_ card: SetGame.Card) {
-        model.choose(card)
+        setGame.choose(card)
     }
     
     public func threeNewCards() {
-        model.makeUnplayedCardsPlayable(isThreeNewCards: true)
+        setGame.makeUnplayedCardsPlayable(isThreeNewCards: true)
     }
     
     public func newGame() {
         let options = SetGameOptions();
-        model = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)
+        setGame = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)
     }
 }
