@@ -21,6 +21,7 @@ struct SetGameView: View {
         VStack {
             cards
             HStack {
+                discardPile.foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                 Button("new game") {
                     viewModel.newGame()
                 }
@@ -60,11 +61,19 @@ struct SetGameView: View {
     @State private var dealt = Set<Card.ID>()
 
     private func isDealt(_ card: Card) -> Bool {
-        dealt.contains(card.id)
+        dealt.contains(card.id) && card.isBeingPlayed
+    }
+    
+    private func hasNotBeenPlayed(_ card: Card) -> Bool {
+        !card.isBeingPlayed && Select.matched != card.select
     }
     
     private var undealtCards: [Card] {
-        viewModel.cards.filter { !isDealt($0) }
+        viewModel.cards.filter { !isDealt($0) && hasNotBeenPlayed($0) }
+    }
+    
+    private var discardedCards: [Card] {
+        viewModel.cards.filter { !$0.isBeingPlayed && Select.matched == $0.select }
     }
 
     @Namespace private var dealingNamespace
@@ -80,12 +89,22 @@ struct SetGameView: View {
             deal()
         }
     }
+    
+    private var discardPile: some View {
+        ZStack {
+            ForEach(discardedCards) { card in
+                view(for: card)
+            }
+        }
+        .frame(width: deckWidth, height: deckWidth / aspectRatio)
+    }
 
     private func deal() {
         var delay: TimeInterval = 0
         for card in viewModel.cards {
             withAnimation(dealAnimation.delay(delay)) {
                 _ = dealt.insert(card.id)
+                viewModel.makeCardPlayable(card)
             }
             delay += dealInterval
         }

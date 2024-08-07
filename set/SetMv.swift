@@ -39,6 +39,10 @@ class SetMv : ObservableObject {
         setGame.makeUnplayedCardsPlayable(isThreeNewCards: true)
     }
     
+    public func makeCardPlayable(_ card: SetGame.Card) {
+        setGame.makeCardPlayable(card)
+    }
+    
     public func newGame() {
         let options = SetGameOptions();
         setGame = SetGame(shapes: options.shapes, opacities: options.opacities, colors: options.colors)

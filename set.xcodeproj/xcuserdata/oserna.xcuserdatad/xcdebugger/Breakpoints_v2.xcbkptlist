@@ -3,4 +3,98 @@
    uuid = "D92C1654-D08E-47B1-A276-09B7E68D697A"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "617E0903-CCD7-4542-B2E1-3253E401420C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "set/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "choose(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "617E0903-CCD7-4542-B2E1-3253E401420C - 6ec67cd009411096"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "set.SetGame.choose(set.SetGame.Card) -&gt; ()"
+                  moduleName = "set"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oserna/Developer/set/set/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64">
+               </Location>
+               <Location
+                  uuid = "617E0903-CCD7-4542-B2E1-3253E401420C - 4ec60edd733caee8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (set.SetGame.Card) -&gt; Swift.Bool in set.SetGame.choose(set.SetGame.Card) -&gt; ()"
+                  moduleName = "set"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oserna/Developer/set/set/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51E4779C-F81A-469D-B447-75C52A7120CB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "set/SetGame.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "choose(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "51E4779C-F81A-469D-B447-75C52A7120CB - 6ec67cd009411049"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "set.SetGame.choose(set.SetGame.Card) -&gt; ()"
+                  moduleName = "set"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oserna/Developer/set/set/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65">
+               </Location>
+               <Location
+                  uuid = "51E4779C-F81A-469D-B447-75C52A7120CB - 6ec67cd009411049"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "set.SetGame.choose(set.SetGame.Card) -&gt; ()"
+                  moduleName = "set"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oserna/Developer/set/set/SetGame.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

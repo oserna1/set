@@ -23,7 +23,7 @@ struct SetGame {
                 }
             }
         }
-        makeUnplayedCardsPlayable()
+//        makeUnplayedCardsPlayable()
     }
     
     private func isSet(_ cards: Array<Card>) -> Bool {
@@ -42,6 +42,36 @@ struct SetGame {
         return card.select == Select.selected(false) && !card.isBeingPlayed
     }
     
+    private mutating func matchCard(_ card: Card) {
+        if let index = cards.findFirst(card){
+            cards[index].select = .matched
+        }
+    }
+    
+    private mutating func invalidateCard(_ card: Card) {
+        if let index = cards.findFirst(card){
+            cards[index].select = .invalid
+        }
+    }
+    
+    private mutating func discardSetCard(_ card: Card) {
+        if let index = cards.findFirst(card) {
+            cards[index].isBeingPlayed = false
+        }
+    }
+    
+    private mutating func deselectCard(_ card: Card) {
+        if let index = cards.findFirst(card) {
+            cards[index].select = Select.selected(false)
+        }
+    }
+    
+    public mutating func makeCardPlayable(_ card: Card) {
+        if let index = cards.findFirst(card) {
+            cards[index].isBeingPlayed = true
+        }
+    }
+    
     public mutating func makeUnplayedCardsPlayable(isThreeNewCards: Bool = false) {
         var shuffledPlayableCards = cards.filter(isPlayable).shuffled()
         if (!shuffledPlayableCards.isEmpty) {
@@ -49,9 +79,7 @@ struct SetGame {
             if (cardsNeededToFillBoard > 1 || isThreeNewCards) {
                 for _ in 1...(isThreeNewCards ? 3 : cardsNeededToFillBoard) {
                     if let lastShuffledCard = shuffledPlayableCards.popLast() {
-                        if let index = cards.findFirst(lastShuffledCard) {
-                            cards[index].isBeingPlayed = true
-                        }
+                        makeCardPlayable(lastShuffledCard)
                     }
                 }
                 cards.shuffle()
@@ -68,18 +96,10 @@ struct SetGame {
                     var selectedCards = selectedDealtCards;
                     selectedCards.append(cards[selectedIndex])
                     if (isSet(selectedCards)) {
-                        selectedDealtCards.forEach { card in
-                            if let index = cards.findFirst(card){
-                                cards[index].select = .matched
-                            }
-                        }
+                        selectedDealtCards.forEach {matchCard($0)}
                         cards[selectedIndex].select = .matched
                     } else {
-                        selectedDealtCards.forEach { card in
-                            if let index = cards.findFirst(card){
-                                cards[index].select = .invalid
-                            }
-                        }
+                        selectedDealtCards.forEach { invalidateCard($0)}
                         cards[selectedIndex].select = .invalid
                     }
                 } else {
@@ -88,27 +108,14 @@ struct SetGame {
             } else {
                 if (selectedDealtCards.allSatisfy {$0.select == Select.matched} &&
                     selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
-                    selectedDealtCards.forEach { card in
-                        if let index = cards.findFirst(card) {
-                            cards[index].select = Select.selected(false)
-                            cards[index].isBeingPlayed = false
-                        }
-                    }
+                    selectedDealtCards.forEach { discardSetCard($0)}
                     cards[selectedIndex].select = Select.selected(true)
                     makeUnplayedCardsPlayable()
                 } else if (selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
-                    selectedDealtCards.forEach { card in
-                        if let index = cards.findFirst(card) {
-                            cards[index].select = Select.selected(false)
-                        }
-                    }
+                    selectedDealtCards.forEach { deselectCard($0)}
                     cards[selectedIndex].select = cards[selectedIndex].select.toggle()
                 } else if (cards[selectedIndex].select != Select.matched) {
-                    selectedDealtCards.forEach { card in
-                        if let index = cards.findFirst(card) {
-                            cards[index].select = Select.selected(false)
-                        }
-                    }
+                    selectedDealtCards.forEach { deselectCard($0)}
                     cards[selectedIndex].select = cards[selectedIndex].select.toggle()
                 }
             }
