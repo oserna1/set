@@ -23,7 +23,7 @@ struct SetGame {
                 }
             }
         }
-//        makeUnplayedCardsPlayable()
+        cards.shuffle()
     }
     
     private func isSet(_ cards: Array<Card>) -> Bool {
@@ -106,8 +106,7 @@ struct SetGame {
                     cards[selectedIndex].select = cards[selectedIndex].select.toggle()
                 }
             } else {
-                if (selectedDealtCards.allSatisfy {$0.select == Select.matched} &&
-                    selectedDealtCards.allSatisfy {$0.id != cards[selectedIndex].id}) {
+                if (selectedDealtCards.allSatisfy {$0.select == Select.matched && $0.id != cards[selectedIndex].id}) {
                     selectedDealtCards.forEach { discardSetCard($0)}
                     cards[selectedIndex].select = Select.selected(true)
                     makeUnplayedCardsPlayable()
@@ -122,7 +121,7 @@ struct SetGame {
         }
     }
     
-    struct Card: Identifiable,Equatable {
+    struct Card: Identifiable, Equatable {
         var debugDescription: String {
             "\(id) \(shapecount) \(shape) \(opacity) \(color)"
         }
@@ -133,6 +132,12 @@ struct SetGame {
         var id: Int
         var isBeingPlayed = false
         var select: Select = .selected(false)
+        var isDiscarded: Bool {
+            return !isBeingPlayed && Select.matched == select
+        }
+        var hasNotBeenPlayed: Bool {
+            return !isBeingPlayed && Select.matched != select
+        }
     }
 }
 

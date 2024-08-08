@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0419B6FA2C646639005DF820 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0419B6F92C646639005DF820 /* Cardify.swift */; };
 		042D2A002BAD2F3100520CFC /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D29FF2BAD2F3100520CFC /* SetGame.swift */; };
 		042D2A022BAD347100520CFC /* SetMv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042D2A012BAD347100520CFC /* SetMv.swift */; };
 		044E33F22BA9144500E717E0 /* setApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044E33F12BA9144500E717E0 /* setApp.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0419B6F92C646639005DF820 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		042D29FF2BAD2F3100520CFC /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		042D2A012BAD347100520CFC /* SetMv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetMv.swift; sourceTree = "<group>"; };
 		044E33EE2BA9144500E717E0 /* set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = set.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 				04D27CFB2C4DF9CE009F2BDC /* CardView.swift */,
 				044E33F52BA9144600E717E0 /* Assets.xcassets */,
 				044E33F72BA9144600E717E0 /* Preview Content */,
+				0419B6F92C646639005DF820 /* Cardify.swift */,
 			);
 			path = set;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			files = (
 				04D27CFC2C4DF9CE009F2BDC /* CardView.swift in Sources */,
 				04D27CFA2C4DF964009F2BDC /* Diamond.swift in Sources */,
+				0419B6FA2C646639005DF820 /* Cardify.swift in Sources */,
 				044E33F42BA9144500E717E0 /* SetGameView.swift in Sources */,
 				042D2A022BAD347100520CFC /* SetMv.swift in Sources */,
 				04DBE9AA2C32110C00936491 /* AspectVgrid.swift in Sources */,

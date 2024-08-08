@@ -42,7 +42,7 @@ struct SetGameView: View {
     }
     
     private func view(for card: Card) -> some View {
-        CardView(card: card, vm: viewModel)
+        CardView(card)
             .matchedGeometryEffect(id: card.id, in: dealingNamespace)
             .transition(.asymmetric(insertion: .identity, removal: .identity))
     }
@@ -64,16 +64,8 @@ struct SetGameView: View {
         dealt.contains(card.id) && card.isBeingPlayed
     }
     
-    private func hasNotBeenPlayed(_ card: Card) -> Bool {
-        !card.isBeingPlayed && Select.matched != card.select
-    }
-    
     private var undealtCards: [Card] {
-        viewModel.cards.filter { !isDealt($0) && hasNotBeenPlayed($0) }
-    }
-    
-    private var discardedCards: [Card] {
-        viewModel.cards.filter { !$0.isBeingPlayed && Select.matched == $0.select }
+        viewModel.cards.filter { !isDealt($0) && $0.hasNotBeenPlayed }
     }
 
     @Namespace private var dealingNamespace
@@ -92,7 +84,7 @@ struct SetGameView: View {
     
     private var discardPile: some View {
         ZStack {
-            ForEach(discardedCards) { card in
+            ForEach(viewModel.cards.filter { $0.isDiscarded } ) { card in
                 view(for: card)
             }
         }
